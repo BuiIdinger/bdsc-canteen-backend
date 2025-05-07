@@ -35,3 +35,8 @@ target_include_directories(${BC_PROJECT_NAME} PUBLIC ${BWSS_INCLUDE_DIR})
 find_package(OpenSSL REQUIRED)
 target_link_libraries(${BC_PROJECT_NAME} PUBLIC OpenSSL::SSL OpenSSL::Crypto)
 target_include_directories(${BC_PROJECT_NAME} PUBLIC ${OPENSSL_INCLUDE_DIR})
+
+# Find & link Boost JSON
+find_package(Boost CONFIG REQUIRED COMPONENTS json)
+target_link_libraries(${BC_PROJECT_NAME} PUBLIC Boost::json)
+target_include_directories(${BC_PROJECT_NAME} PUBLIC ${BOOST_INCLUDE_DIR})
