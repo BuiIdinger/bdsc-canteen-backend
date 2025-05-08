@@ -31,13 +31,13 @@ void WebSocket::onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::st
   }
 
   // Prase as object, check if object contains service
-  boost::json::object const& messageObject = messageValue.get_object();
+  boost::json::object& messageObject = messageValue.get_object();
   if (!messageObject.contains("s") || !messageObject.at("s").is_int64()) {
     connection->send("Invaild data", bwss::OpCodes::TEXT_FRAME);
     return;
   }
 
-  Services::handle(std::move(messageObject), messageObject.at("s").get_int64());
+  Services::handle(std::move(connection), std::move(messageObject), messageObject.at("s").get_int64());
 }
 
 void WebSocket::onClose(std::weak_ptr<bwss::Connection> connectionPtr) {
