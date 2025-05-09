@@ -4,4 +4,5 @@ add_executable(${BC_PROJECT_NAME}
   WebSocket.cpp
   Services.cpp
   Login.cpp
+  Database.cpp
 )
