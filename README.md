@@ -28,7 +28,3 @@ Strictly Prohibited Without Explicit Written Permission:
 - Commercial use
 - Use by educational institutions
 - Any form of redistribution or forking for operational purposes
-
-# Notices
-
-All icons are from [Feather Icons](https://feathericons.com/).
