@@ -7,7 +7,7 @@ void Services::handle(std::shared_ptr<bwss::Connection> connection, boost::json:
   // Lookup service
   auto it = serviceMap.find(service);
   if (it == serviceMap.end()) {
-    connection->send("Invaild data", bwss::OpCodes::TEXT_FRAME);
+    connection->send("Invalid data", bwss::OpCodes::TEXT_FRAME);
     return;
   }
 

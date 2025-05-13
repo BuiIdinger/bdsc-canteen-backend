@@ -26,14 +26,14 @@ void WebSocket::onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::st
   boost::system::error_code praseError;
   boost::json::value messageValue = boost::json::parse(message, praseError);
   if (praseError || !messageValue.is_object()) {
-    connection->send("Invaild data", bwss::OpCodes::TEXT_FRAME);
+    connection->send("Invalid data", bwss::OpCodes::TEXT_FRAME);
     return;
   }
 
   // Prase as object, check if object contains service
   boost::json::object& messageObject = messageValue.get_object();
   if (!messageObject.contains("s") || !messageObject.at("s").is_int64()) {
-    connection->send("Invaild data", bwss::OpCodes::TEXT_FRAME);
+    connection->send("Invalid data", bwss::OpCodes::TEXT_FRAME);
     return;
   }
 
