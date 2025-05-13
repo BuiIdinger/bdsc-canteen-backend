@@ -19,7 +19,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Set build type
 set(CMAKE_BUILD_TYPE Debug)
 
-# Set varaibles
+# Set variables
 set(BC_PROJECT_NAME bdsc-canteen-backend)
 set(BC_SRC_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
 
