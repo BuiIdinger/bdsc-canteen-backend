@@ -6,4 +6,5 @@ add_executable(${BC_PROJECT_NAME}
   Login.cpp
   Database.cpp
   TESTS.CPP
+  Utilities.cpp
 )
