@@ -17,5 +17,5 @@ inline static std::unordered_map<int, ServiceHandler> serviceMap = {
 };
 
 namespace Services {
-  void handle(std::shared_ptr<bwss::Connection> connection, boost::json::object message, const int64_t service);
+  void handle(std::shared_ptr<bwss::Connection> connection, boost::json::object message, uint64_t service);
 } // namespace Services
