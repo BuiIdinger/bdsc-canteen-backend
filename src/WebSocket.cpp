@@ -1,7 +1,6 @@
 #include "WebSocket.h"
 #include <memory>
 #include <boost/json.hpp>
-#include <iostream>
 #include "Services.h"
 
 void WebSocket::onOpen(std::weak_ptr<bwss::Connection> connectionPtr) {
@@ -32,12 +31,16 @@ void WebSocket::onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::st
 
   // Prase as object, check if object contains service
   boost::json::object& messageObject = messageValue.get_object();
-  if (!messageObject.contains("s") || !messageObject.at("s").is_int64()) {
+
+  boost::json::value* servicePtr = messageObject.if_contains("s");
+  if (!servicePtr || !servicePtr->is_int64()) {
     connection->send("Invalid data", bwss::OpCodes::TEXT_FRAME);
     return;
   }
 
-  Services::handle(std::move(connection), std::move(messageObject), messageObject.at("s").get_int64());
+  const int64_t service = messageObject.at("s").get_int64();
+  
+  Services::handle(std::move(connection), std::move(messageObject), service);
 }
 
 void WebSocket::onClose(std::weak_ptr<bwss::Connection> connectionPtr) {
