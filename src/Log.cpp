@@ -54,7 +54,7 @@ void Log::Database::info(const std::string &message, const std::source_location 
 
 
 /**
- * Helper function
+ * Helper functions
  */
 // Forms the message to be used for outputting into the log file
 std::string Log::formMessage(const Categories& category, const std::string& message, const std::source_location& location) {
