@@ -11,7 +11,7 @@ void shutdown(const int& code) noexcept {
 int main() {
   // runTests();
 
-  // Database::connect();
+  Database::connect();
   
   // Setup WebSocket server
   bwss::onOpen = WebSocket::onOpen;
