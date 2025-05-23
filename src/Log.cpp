@@ -79,5 +79,5 @@ std::string Log::formMessage(const Categories& category, const std::string& mess
 }
 
 void Log::output(const std::string& message) {
-  std::cerr << message << std::endl;
+  std::cerr << message;
 }
