@@ -23,7 +23,6 @@ void WebSocket::onOpen(std::weak_ptr<bwss::Connection> connectionPtr) {
   // Attach socket data
   SocketData data;
   connection->userData = std::make_shared<SocketData>(data);
-  // std::shared_ptr<SocketData> userData = connection->getUserData<SocketData>();
 }
 
 void WebSocket::onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::string message) {
