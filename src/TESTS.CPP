@@ -16,7 +16,7 @@ static void runPasswordAndEmailTests() {
   };
 
   for (const auto& password : password) {
-    auto it = Utilities::vaildatePassword(password);
+    auto it = Utilities::validatePassword(password);
     if (!it.first) {
       std::cout << "Password isn't valid " << it.second << std::endl;
     } else {
@@ -34,7 +34,7 @@ static void runPasswordAndEmailTests() {
   };
 
   for (const auto& email : emails) {
-    auto it = Utilities::vaildateEmail(email);
+    auto it = Utilities::validateEmail(email);
     if (!it.first) {
       std::cout << "Email isn't valid " << it.second << std::endl;
     } else {
