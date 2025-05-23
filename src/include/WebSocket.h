@@ -13,4 +13,11 @@ namespace WebSocket {
   void onOpen(std::weak_ptr<bwss::Connection> connectionPtr);
   void onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::string message);
   void onClose(std::weak_ptr<bwss::Connection> connectionPtr);
+
+  struct ErrorPageOptions {
+    int32_t status = 200;
+    std::string message = "Success.";
+  };
+
+  void returnErrorPage(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions);
 } // namespace WebSocket

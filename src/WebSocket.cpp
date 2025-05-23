@@ -2,6 +2,17 @@
 #include <memory>
 #include <boost/json.hpp>
 #include "Services.h"
+#include "Utilities.h"
+
+void WebSocket::returnErrorPage(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions) {
+  boost::json::object response;
+  response["c"] = errorPageOptions.status;
+  response["m"] = errorPageOptions.message;
+  response["t"] = Utilities::getCurrentEpoch();
+  response["s"] = 0;
+
+  connection->send(boost::json::serialize(response), bwss::OpCodes::TEXT_FRAME);
+}
 
 void WebSocket::onOpen(std::weak_ptr<bwss::Connection> connectionPtr) {
   std::shared_ptr<bwss::Connection> connection = connectionPtr.lock();
