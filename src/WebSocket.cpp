@@ -48,9 +48,7 @@ void WebSocket::onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::st
     return;
   }
 
-  const int64_t service = messageObject.at("s").get_int64();
-  
-  Services::handle(std::move(connection), std::move(messageObject), service);
+  Services::handle(std::move(connection), std::move(messageObject), servicePtr->get_int64());
 }
 
 void WebSocket::onClose(std::weak_ptr<bwss::Connection> connectionPtr) {
