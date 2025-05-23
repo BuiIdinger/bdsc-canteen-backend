@@ -20,5 +20,5 @@ int main() {
 
   bwss::run();
 
-  __builtin_unreachable();
+  UNREACHABLE;
 }
