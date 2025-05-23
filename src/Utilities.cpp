@@ -2,8 +2,15 @@
 #include "Utilities.h"
 #include <utility>
 #include <regex>
+#include <chrono>
+#include <boost/json.hpp>
+#include <bwss/bwss.h>
 
-std::pair<bool, std::string> Utilities::vaildatePassword(const std::string& password) {
+int64_t Utilities::getCurrentEpoch() {
+  return std::chrono::system_clock::now().time_since_epoch().count();
+}
+
+std::pair<bool, std::string> Utilities::validatePassword(const std::string& password) {
   if (password.size() < 3) {
     return {false, "Password must be longer than 3 charters."};
   }
@@ -17,12 +24,33 @@ std::pair<bool, std::string> Utilities::vaildatePassword(const std::string& pass
   return {true, ""};
 }
 
-std::pair<bool, std::string> Utilities::vaildateEmail(const std::string& email) {
-  const std::regex pattern(R"(^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)");
+std::pair<bool, std::string> Utilities::validateEmail(const std::string& email) {
+  // This regex was AI created because nobody knows how to do regex's
+  const std::regex regex(R"(^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)");
 
-  if (std::regex_match(email, pattern)) {
+  if (std::regex_match(email, regex)) {
+    return {true, ""};
+  }
+
+  return {false, "Email is invalid."};
+}
+
+std::pair<bool, std::string> Utilities::validateName(const std::string& name) {
+  const std::regex regex("^[A-Za-z]+(?:[\\s'-][A-Za-z]+)*$");
+
+  if (std::regex_match(name, regex)) {
     return {true, ""};
   } else {
-    return {false, "Email is invalid."};
+    return {false, "Name is invalid."};
   }
+}
+
+void Utilities::revertPage(const std::shared_ptr<bwss::Connection>& connection, const int32_t service, const std::string& page) {
+  boost::json::object message;
+  boost::json::object messageData;
+
+  message["s"] = service;
+  message["p"] = page;
+
+  connection->send(boost::json::serialize(message), bwss::OpCodes::TEXT_FRAME);
 }
