@@ -7,7 +7,7 @@ cmake_policy(SET CMP0079 NEW)
 project(
   bdsc-canteen-backend
   VERSION 1.0.0 
-  DESCRIPTION "BDSC Canteen backend." 
+  DESCRIPTION "BDSC Canteen backend."
   LANGUAGES CXX
 )
 
