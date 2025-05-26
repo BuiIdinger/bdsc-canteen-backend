@@ -19,5 +19,5 @@ namespace WebSocket {
     std::string message = "Success.";
   };
 
-  void returnErrorPage(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions);
+  void returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions);
 } // namespace WebSocket

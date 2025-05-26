@@ -4,7 +4,7 @@
 #include "Services.h"
 #include "Utilities.h"
 
-void WebSocket::returnErrorPage(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions) {
+void WebSocket::returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions) {
   boost::json::object response;
   response["c"] = errorPageOptions.status;
   response["m"] = errorPageOptions.message;
