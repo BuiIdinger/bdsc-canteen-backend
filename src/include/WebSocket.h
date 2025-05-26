@@ -5,9 +5,21 @@
 #include <memory>
 #include <unordered_map>
 
+enum class AuthenticationLevels : int {
+  LOGGED_OUT = 0,
+  LOGGED_IN = 1,
+  ADMIN = 2,
+};
+
 struct SocketData {
-  std::string token;
-  int16_t authenticationLevel = 0;
+  std::string id;
+
+  std::string email;
+  std::string firstName;
+  std::string lastNName;
+
+  AuthenticationLevels authenticationTokenLevel = AuthenticationLevels::LOGGED_OUT;
+  std::string authenticationToken;
 };
 
 /*
