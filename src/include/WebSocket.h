@@ -3,11 +3,21 @@
 #include <string>
 #include <bwss/bwss.h>
 #include <memory>
+#include <unordered_map>
 
 struct SocketData {
   std::string token;
   int16_t authenticationLevel = 0;
 };
+
+/*
+ * We need this map, as casting to a raw void pointer is unsafe, also
+ * I cannot modify the callbacks functions definition
+ *
+ * We use the fd of the connection as a key, and the weak pointer as
+ * the value
+ */
+inline std::unordered_map<int, std::weak_ptr<bwss::Connection>> callbackConnections;
 
 namespace WebSocket {
   void onOpen(std::weak_ptr<bwss::Connection> connectionPtr);

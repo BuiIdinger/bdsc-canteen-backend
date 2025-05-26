@@ -5,6 +5,8 @@
 #include <chrono>
 #include <boost/json.hpp>
 #include <bwss/bwss.h>
+#include "WebSocket.h"
+#include <memory>
 
 int64_t Utilities::getCurrentEpoch() {
   return std::chrono::system_clock::now().time_since_epoch().count();
@@ -53,4 +55,23 @@ void Utilities::revertPage(const std::shared_ptr<bwss::Connection>& connection, 
   message["p"] = page;
 
   connection->send(boost::json::serialize(message), bwss::OpCodes::TEXT_FRAME);
+}
+
+std::shared_ptr<bwss::Connection> Utilities::CallbackConnection::get(const int &socket) {
+  const auto it = callbackConnections.find(socket);
+  if (it == callbackConnections.end()) {
+    return nullptr;
+  }
+
+  callbackConnections.erase(socket);
+
+  return it->second.lock();
+}
+
+void Utilities::CallbackConnection::insert(int socket, std::shared_ptr<bwss::Connection> connection) {
+  callbackConnections.insert({ socket, std::move(connection) });
+}
+
+void Utilities::CallbackConnection::erase(const int& socket) {
+  callbackConnections.erase(socket);
 }
