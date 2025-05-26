@@ -57,6 +57,7 @@ namespace Database {
    * Prepares a statement to be used for a query
    */
   void prepareStatement(const std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>& statement, const std::string& query);
+  void prepareStatement(std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>& statement, const std::string& query);
 
   inline std::unique_ptr<CassSession, void(*)(CassSession*)> connection(cass_session_new(), Database::disconnect);
   inline std::unique_ptr<CassCluster, void(*)(CassCluster*)> cluster(cass_cluster_new(), cass_cluster_free);

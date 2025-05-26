@@ -153,19 +153,39 @@ void Database::disconnect(CassSession* connection) {
   connection = nullptr;
 }
 
-void Database::prepareStatement(const std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>& statement, const std::string& query) {
+/**
+ * Statement preparing
+ */
+void Database::prepareStatement(std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>& statement, const std::string& query) {
+  CassFuture* future = cass_session_prepare(connection.get(), query.c_str());
 
-  /*
-  std::unique_ptr<CassFuture, void(*)(CassFuture*)> future(cass_session_prepare(Database::connection.get(), query.c_str()), cass_future_free);
-  cass_future_wait(future.get());
-  if (cass_future_error_code(future.get()) != CASS_OK) {
+  // Define callback
+  auto callback = [](CassFuture* future, void* data) {
+    auto& statementCasted = *static_cast<std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>*>(data);
+
+    if (cass_future_error_code(future) != CASS_OK) {
+      const char* errorMessage;
+      size_t errorMessageSize;
+      cass_future_error_message(future, &errorMessage, &errorMessageSize);
+      cass_future_free(future);
+      Log::Database::critical("Failed to prepare statement: " + std::string(errorMessage, errorMessageSize));
+      UNREACHABLE;
+    }
+
+    statementCasted.reset(cass_future_get_prepared(future));
+  };
+
+  // Set the callback
+  const CassError setCallbackError = cass_future_set_callback(future, callback, &statement);
+  if (setCallbackError != CASS_OK) {
     const char* errorMessage;
     size_t errorMessageSize;
-    cass_future_error_message(future.get(), &errorMessage, &errorMessageSize);
-    return std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>(nullptr, cass_prepared_free);
+    cass_future_error_message(future, &errorMessage, &errorMessageSize);
+    cass_future_free(future);
+    Log::Database::critical("Failed to set callback: " + std::string(errorMessage, errorMessageSize));
+    UNREACHABLE;
   }
-
-  const CassPrepared* prepared = cass_future_get_prepared(future.get());
+}
 
   return std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>(prepared, cass_prepared_free);
   cass_prepared_free(prepared); */
