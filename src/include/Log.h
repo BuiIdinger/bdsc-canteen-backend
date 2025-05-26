@@ -19,14 +19,14 @@ namespace Log {
   };
 
   const std::unordered_map<Categories, std::string> categoriesMap = {
-    {Categories::CRITICAL, "[CRITICAL]"},
-    {Categories::ERROR, "[ERROR]"},
-    {Categories::WARN, "[WARN]"},
-    {Categories::INFO, "[INFO]"},
-    {Categories::DATABASE_CRITICAL, "[DATABASE_CRITICAL]"},
-    {Categories::DATABASE_ERROR, "[DATABASE_ERROR]"},
-    {Categories::DATABASE_WARN, "[DATABASE_WARN]"},
-    {Categories::DATABASE_INFO, "[DATABASE_INFO]"},
+    {CRITICAL, "[CRITICAL]"},
+    {ERROR, "[ERROR]"},
+    {WARN, "[WARN]"},
+    {INFO, "[INFO]"},
+    {DATABASE_CRITICAL, "[DATABASE_CRITICAL]"},
+    {DATABASE_ERROR, "[DATABASE_ERROR]"},
+    {DATABASE_WARN, "[DATABASE_WARN]"},
+    {DATABASE_INFO, "[DATABASE_INFO]"},
   };
 
   /**
