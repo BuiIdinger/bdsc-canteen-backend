@@ -51,7 +51,7 @@ std::pair<bool, std::string> Utilities::validateName(const std::string& name) {
   }
 }
 
-void Utilities::revertPage(const std::shared_ptr<bwss::Connection>& connection, const int32_t service, const std::string& page) {
+void Utilities::changePage(const std::shared_ptr<bwss::Connection>& connection, const int32_t service, const std::string& page) {
   boost::json::object message;
   boost::json::object messageData;
 
