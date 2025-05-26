@@ -19,4 +19,7 @@ namespace Utilities {
     void insert(int socket, std::shared_ptr<bwss::Connection> connection);
     void erase(const int& socket);
   }
+
+  std::string generateRandomBytes(const size_t& size);
+  std::string generateAuthenticationToken();
 }

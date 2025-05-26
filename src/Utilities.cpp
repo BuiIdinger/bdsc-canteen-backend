@@ -7,6 +7,10 @@
 #include <bwss/bwss.h>
 #include "WebSocket.h"
 #include <memory>
+#include <sstream>
+#include <random>
+#include <iomanip>
+#include <vector>
 
 int64_t Utilities::getCurrentEpoch() {
   return std::chrono::system_clock::now().time_since_epoch().count();
@@ -74,4 +78,31 @@ void Utilities::CallbackConnection::insert(int socket, std::shared_ptr<bwss::Con
 
 void Utilities::CallbackConnection::erase(const int& socket) {
   callbackConnections.erase(socket);
+}
+
+static std::string generateRandomBytes(const size_t& size) {
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  static std::uniform_int_distribution<> dis(0, 255);
+
+  std::vector<unsigned char> random_bytes(size);
+  for (auto& byte : random_bytes) {
+    byte = static_cast<unsigned char>(dis(gen));
+  }
+
+  std::ostringstream oss;
+  for (const auto& byte : random_bytes) {
+    oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(byte);
+  }
+
+  return oss.str();
+}
+
+std::string Utilities::generateAuthenticationToken() {
+  std::string authenticationToken;
+  authenticationToken += "BUILDINGER_AUTH";
+  authenticationToken += "_";
+  authenticationToken += generateRandomBytes(128);
+
+  return std::move(authenticationToken);
 }
