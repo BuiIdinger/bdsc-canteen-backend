@@ -4,10 +4,10 @@
 #include "Services.h"
 #include "Utilities.h"
 
-void WebSocket::returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions) {
+void WebSocket::returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorNotificationOptions& options) {
   boost::json::object response;
-  response["c"] = errorPageOptions.status;
-  response["m"] = errorPageOptions.message;
+  response["c"] = static_cast<int>(options.status);
+  response["m"] = options.message;
   response["t"] = Utilities::getCurrentEpoch();
   response["s"] = 0;
 

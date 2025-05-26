@@ -24,11 +24,6 @@ namespace WebSocket {
   void onMessage(std::weak_ptr<bwss::Connection> connectionPtr, std::string message);
   void onClose(std::weak_ptr<bwss::Connection> connectionPtr);
 
-  struct ErrorPageOptions {
-    int32_t status = 200;
-    std::string message = "Success.";
-  };
-
   enum class StatusCodes : int {
     // 1xx Informational
     CONTINUE = 100,
@@ -103,5 +98,10 @@ namespace WebSocket {
     NETWORK_AUTHENTICATION_REQUIRED = 511
   };
 
-  void returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorPageOptions& errorPageOptions);
+  struct ErrorNotificationOptions {
+    StatusCodes status = StatusCodes::OK;
+    std::string message = "Success.";
+  };
+
+  void returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorNotificationOptions& options);
 } // namespace WebSocket
