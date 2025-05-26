@@ -22,6 +22,13 @@ struct SocketData {
   std::string authenticationToken;
 };
 
+enum class ServicesIdent : int {
+  NOTIFICATION = 0,
+  SET_STARTUP_USER_DATA = 1,
+  AUTHENTICATION_MODEL_PAGE_CHANGE = 2,
+  SIGNUP_PAGE_INVOKE = 2,
+};
+
 /*
  * We need this map, as casting to a raw void pointer is unsafe, also
  * I cannot modify the callbacks functions definition
