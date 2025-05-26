@@ -115,5 +115,5 @@ namespace WebSocket {
     std::string message = "Success.";
   };
 
-  void returnErrorNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorNotificationOptions& options);
+  void sendNotification(const std::shared_ptr<bwss::Connection>& connection, const ErrorNotificationOptions& options);
 } // namespace WebSocket
