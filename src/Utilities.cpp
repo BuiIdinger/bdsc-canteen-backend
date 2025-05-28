@@ -18,10 +18,10 @@ int64_t Utilities::getCurrentEpoch() {
 
 std::pair<bool, std::string> Utilities::validatePassword(const std::string& password) {
   if (password.size() < 3) {
-    return {false, "Password must be longer than 3 charters."};
+    return {false, "Password must be longer than 3 characters."};
   }
   if (password.size() > 200) {
-    return {false, "Password must be shorter than 200 charters."};
+    return {false, "Password must be shorter than 200 characters."};
   }
   if (password.empty()) {
     return {false, "Password must not be empty."};
@@ -80,7 +80,7 @@ void Utilities::CallbackConnection::erase(const int& socket) {
   callbackConnections.erase(socket);
 }
 
-static std::string generateRandomBytes(const size_t& size) {
+std::string Utilities::generateRandomBytes(const size_t& size) {
   static std::random_device rd;
   static std::mt19937 gen(rd());
   static std::uniform_int_distribution<> dis(0, 255);
