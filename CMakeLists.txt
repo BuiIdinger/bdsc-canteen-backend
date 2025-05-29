@@ -27,23 +27,28 @@ set(BC_SRC_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
 add_subdirectory(src)
 
 # Include headers in the include directory
-target_include_directories(${BC_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/include)
+target_include_directories(${BC_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src/include)
 
 # Find & link BWSS
 find_package(bwss REQUIRED)
-target_link_libraries(${BC_PROJECT_NAME} PUBLIC bwss::bwss)
-target_include_directories(${BC_PROJECT_NAME} PUBLIC ${BWSS_INCLUDE_DIR})
+target_link_libraries(${BC_PROJECT_NAME} PRIVATE bwss::bwss)
+target_include_directories(${BC_PROJECT_NAME} PRIVATE ${BWSS_INCLUDE_DIR})
 
 # Find & link OpenSSL
 find_package(OpenSSL REQUIRED)
-target_link_libraries(${BC_PROJECT_NAME} PUBLIC OpenSSL::SSL OpenSSL::Crypto)
-target_include_directories(${BC_PROJECT_NAME} PUBLIC ${OPENSSL_INCLUDE_DIR})
+target_link_libraries(${BC_PROJECT_NAME} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+target_include_directories(${BC_PROJECT_NAME} PRIVATE ${OPENSSL_INCLUDE_DIR})
 
 # Find & link Boost JSON
 find_package(Boost CONFIG REQUIRED COMPONENTS json)
-target_link_libraries(${BC_PROJECT_NAME} PUBLIC Boost::json)
-target_include_directories(${BC_PROJECT_NAME} PUBLIC ${BOOST_INCLUDE_DIR})
+target_link_libraries(${BC_PROJECT_NAME} PRIVATE Boost::json)
+target_include_directories(${BC_PROJECT_NAME} PRIVATE ${BOOST_INCLUDE_DIR})
 
 # Find & link Cassandra library
 # Link libraries
-target_link_libraries(${BC_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/externel/libcassandra.dylib)
+target_link_libraries(${BC_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/externel/libcassandra.dylib)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBSODIUM IMPORTED_TARGET REQUIRED libsodium)
+target_link_libraries(${BC_PROJECT_NAME} PRIVATE PkgConfig::LIBSODIUM)
+target_link_directories(${BC_PROJECT_NAME} PRIVATE PkgConfig::LIBSODIUM)
