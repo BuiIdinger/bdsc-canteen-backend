@@ -75,6 +75,7 @@ int main() {
   // runTests();
 
   Database::connect();
+  Database::prepareAllStatements();
   
   // Setup WebSocket server
   bwss::onOpen = WebSocket::onOpen;

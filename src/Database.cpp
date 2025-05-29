@@ -6,6 +6,9 @@
 #include <sstream>
 #include "Log.h"
 
+/* Includes for statement preparing */
+#include "Signup.h"
+
 /**
  * Used for SSL certificates when connecting
  */
@@ -187,6 +190,6 @@ void Database::prepareStatement(std::unique_ptr<const CassPrepared, void(*)(cons
   }
 }
 
-  return std::unique_ptr<const CassPrepared, void(*)(const CassPrepared*)>(prepared, cass_prepared_free);
-  cass_prepared_free(prepared); */
+void Database::prepareAllStatements() {
+  Services::Authentication::Signup::prepareStatements();
 }
