@@ -29,8 +29,8 @@ static void runPasswordAndEmailTests() {
     {"shayden.....seymour@ursomthing.com.org"},
     {"sahyden"},
     {"buildinger.org"},
-  {"shayden.seymour@my.bdsc.school.nz"},
-  {"buildinger@buildinger.org"}
+    {"shayden.seymour@my.bdsc.school.nz"},
+    {"buildinger@buildinger.org"}
   };
 
   for (const auto& email : emails) {
@@ -43,9 +43,43 @@ static void runPasswordAndEmailTests() {
   }
 }
 
+static void runHashingPasswordTests() {
+  const std::vector<std::string> passwords = {
+    {"password"},
+    {"randomstuff-lol"},
+    {"eshaysInTOWN&%!("},
+    {"shayden158"},
+  };
+
+  const std::vector<std::string> verifyPasswords = {
+    {"password"},
+    {"randomstuff-lol"},
+    {"eshaysInTOWN&%!("},
+    {"shayden158"},
+  };
+
+  for (int i = 0; i < 3; ++i) {
+    auto it = Utilities::Password::hash(passwords[i]);
+    if (!it.first) {
+      std::cout << "Unable to hash password, skipping password " << passwords[i] << "\n";
+      continue;
+    }
+
+    const std::string hashedPassword = it.second;
+    std::cout << "Hashed password is: " << hashedPassword;
+
+    if (!Utilities::Password::verify(hashedPassword, verifyPasswords[i])) {
+      std::cout << "Password doesn't match " << "\n";
+    } else {
+      std::cout << "Password matches" << "\n";
+    }
+  }
+}
+
 void runTests() {
   std::cout << "Tests running" << "\n";
-  runPasswordAndEmailTests();
+ // runPasswordAndEmailTests();
+  runHashingPasswordTests();
 
   std::cout << "Completed tests" << "\n";
 }
