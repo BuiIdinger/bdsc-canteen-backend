@@ -67,9 +67,10 @@ std::shared_ptr<bwss::Connection> Utilities::CallbackConnection::get(const int &
     return nullptr;
   }
 
+  std::shared_ptr<bwss::Connection> connection = it->second.lock();
   callbackConnections.erase(socket);
 
-  return it->second.lock();
+  return connection;
 }
 
 void Utilities::CallbackConnection::insert(int socket, std::shared_ptr<bwss::Connection> connection) {
