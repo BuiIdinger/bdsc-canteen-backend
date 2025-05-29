@@ -24,4 +24,9 @@ namespace Utilities {
 
   std::string generateRandomBytes(const size_t& size);
   std::string generateAuthenticationToken();
+
+  namespace Password {
+    std::pair<bool, std::string> hash(const std::string& password);
+    bool verify(const std::string& storedPassword, const std::string& inputPassword);
+  }
 }

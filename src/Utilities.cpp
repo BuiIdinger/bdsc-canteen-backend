@@ -11,6 +11,8 @@
 #include <random>
 #include <iomanip>
 #include <vector>
+#include <sodium.h>
+#include "Main.h"
 
 int64_t Utilities::getCurrentEpoch() {
   return std::chrono::system_clock::now().time_since_epoch().count();
@@ -106,4 +108,22 @@ std::string Utilities::generateAuthenticationToken() {
   authenticationToken += generateRandomBytes(128);
 
   return std::move(authenticationToken);
+}
+
+std::pair<bool, std::string> Utilities::Password::hash(const std::string& password) {
+  unsigned char hashedPassword[crypto_pwhash_STRBYTES];
+
+  if (crypto_pwhash_str(reinterpret_cast<char*>(hashedPassword), password.c_str(), password.length(), crypto_pwhash_OPSLIMIT_INTERACTIVE, crypto_pwhash_MEMLIMIT_INTERACTIVE) != 0) {
+    return { false, ERROR_OCCURRED };
+  }
+
+  return { true, std::string(reinterpret_cast<char*>(hashedPassword))};
+}
+
+bool Utilities::Password::verify(const std::string& storedPassword, const std::string& inputPassword) {
+  if (crypto_pwhash_str_verify(storedPassword.c_str(), inputPassword.c_str(), inputPassword.length()) != 0) {
+    return false;
+  }
+
+  return true;
 }
